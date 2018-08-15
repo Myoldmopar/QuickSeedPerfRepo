@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-from main import create_from_pm_import
-from timer import MeasureDuration
-
 
 class KeyTypes(object):
     String = 1
@@ -15,8 +11,9 @@ def generate_values_for_keys(keys, extra_string_key_count=0):
             output[k] = 'abcdefghijklmnopqrstuvwxyz'
         elif v == KeyTypes.PintValue:
             output[k] = {'@uom': 'kBtu', '#text': '3.1415926535'}
-    for i in range(extra_string_key_count):
-        output[str(i)] = 'abcdefghijklmnopqrstuvwxyz'
+    if extra_string_key_count > 0:
+        for i in range(extra_string_key_count-1):
+            output[str(i)] = 'abcdefghijklmnopqrstuvwxyz'
     return output
 
 
@@ -45,9 +42,3 @@ base_keys = {
     u'property_id': KeyTypes.String,
     u'year_built': KeyTypes.String,
 }
-
-single_data = generate_values_for_keys(base_keys, extra_string_key_count=10)
-full_data_set = generate_properties(single_data, 100000)
-
-with MeasureDuration() as m:
-    data = create_from_pm_import(full_data_set, limit=False)
