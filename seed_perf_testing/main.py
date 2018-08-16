@@ -4,7 +4,7 @@ import datetime
 import pint_var
 
 
-def create_from_pm_import(properties, limit=False):
+def create_from_pm_import(properties, limit=False, debug_print=False):
 
     # This list should cover the core keys coming from PM, ensuring that they map easily
     # We will also look for keys not in this list and just map them to themselves
@@ -46,8 +46,9 @@ def create_from_pm_import(properties, limit=False):
     property_num = 0
     last_time = datetime.datetime.now()
 
-    print("About to try to import %s properties from ESPM" % num_properties)
-    print("Starting at %s" % last_time)
+    if debug_print:
+        print("About to try to import %s properties from ESPM" % num_properties)
+        print("Starting at %s" % last_time)
 
     # Create a single row for each building
     for pm_property in properties:
@@ -58,9 +59,10 @@ def create_from_pm_import(properties, limit=False):
 
         # report some helpful info
         property_num += 1
-        if property_num / 10.0 == property_num / 10:
-            new_time = datetime.datetime.now()
-            print("On property number %s; current time: %s" % (property_num, new_time))
+        if debug_print:
+            if property_num / 10.0 == property_num / 10:
+                new_time = datetime.datetime.now()
+                print("On property number %s; current time: %s" % (property_num, new_time))
 
         this_row = []
 
